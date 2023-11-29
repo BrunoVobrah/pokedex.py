@@ -1,0 +1,29 @@
+import requests
+
+def obter_info_pokemon(nome_pokemon):
+    url = f"https://pokeapi.co/api/v2/pokemon/{nome_pokemon.lower()}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        dados_pokemon = response.json()
+        return dados_pokemon
+    else:
+        return None
+
+def mostrar_info_pokemon(dados_pokemon):
+    if dados_pokemon:
+        print(f"Nome: {dados_pokemon['name'].capitalize()}")
+        print("Tipos:")
+        for tipo in dados_pokemon['types']:
+            print(f"- {tipo['type']['name'].capitalize()}")
+        print("Habilidades:")
+        for habilidade in dados_pokemon['abilities']:
+            print(f"- {habilidade['ability']['name'].capitalize()}")
+        # Outras informações que você pode querer mostrar, como estatísticas, sprites, etc.
+    else:
+        print("Pokemon não encontrado.")
+
+# Example of use
+nome_pokemon = input("Digite o nome de um Pokémon: ")
+info_pokemon = obter_info_pokemon(nome_pokemon)
+mostrar_info_pokemon(info_pokemon)
